@@ -7,9 +7,9 @@ sudo runhaskell Setup.hs install
 Once you've done that, you can if you wish run the tests:
 
 cd tests
-ghc --make -plg Strict.Plugin NonTerminating.hs
+ghc --make -fplugin=Strict.Plugin NonTerminating.hs
 ./NonTerminating
 
 To use the plugin on any module you compile with GHC, use the -plgStrict.Plugin option, or include it in an OPTIONS_GHC pragma, like so:
 
-{-# OPTIONS_GHC -plgStrict.Plugin #-}
+{-# OPTIONS_GHC -fplugin=Strict.Plugin #-}

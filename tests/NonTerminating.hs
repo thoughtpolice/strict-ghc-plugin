@@ -28,5 +28,3 @@ main :: IO ()
 main = do
     let xs = foreverFrom 0
     evaluate_and_possibly_timeout (take 10 xs)
-
-    
