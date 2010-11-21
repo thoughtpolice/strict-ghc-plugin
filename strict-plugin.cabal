@@ -1,0 +1,20 @@
+Name:           strict-plugin
+Version:        1.0
+License:        BSD3
+Synopsis:       A plugin for GHC that lets you change Haskell into a strict language!
+Cabal-Version:  >= 1.2
+Build-Type:	Simple
+Author:         Max Bolingbroke
+Homepage:       http://www.omega-prime.co.uk
+
+Library
+    Exposed-Modules:
+        Strict.Plugin
+    Other-Modules:
+        Strict.Pass
+    Build-Depends:
+        base,
+        syb,
+        template-haskell,
+        ghc-prim,
+        ghc >= 6.11
