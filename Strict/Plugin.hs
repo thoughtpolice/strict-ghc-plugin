@@ -6,7 +6,7 @@ import GHCPlugins
 
 plugin :: Plugin
 plugin = defaultPlugin {
-    installCoreToDos = install
+  installCoreToDos = install
   }
 
 install :: [CommandLineOption] -> [CoreToDo] -> CoreM [CoreToDo]
