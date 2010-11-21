@@ -5,14 +5,29 @@ module Strict.Pass (strictifyProgram) where
 
 import GHCPlugins
 
+import Control.Monad
 import Data.Generics
 import Data.Maybe
 
+import Strict.Annotation
+
 \end{code}
+Strictification of a program based on annotations.
 \begin{code}
 
-strictifyProgram :: [CoreBind] -> CoreM [CoreBind]
-strictifyProgram binds = everywhereM (mkM strictifyExpr) binds
+strictifyProgram :: ModGuts -> CoreM [CoreBind]
+strictifyProgram guts = mapM (strictifyFunc guts) (mg_binds guts)
+
+strictifyFunc :: ModGuts -> CoreBind -> CoreM CoreBind
+strictifyFunc guts x@(NonRec b e) = do 
+  b <- shouldStrictify guts b
+  case b of
+    True -> everywhereM (mkM strictifyExpr) x
+    False -> return x
+strictifyFunc guts x@(Rec bes) = do
+  b <- (not . null) `liftM` (filterM (shouldStrictify guts . fst) bes)
+  if b then everywhereM (mkM strictifyExpr) x
+    else return x
 
 strictifyExpr :: CoreExpr -> CoreM CoreExpr
 strictifyExpr e@(Let (NonRec b e1) e2) 
@@ -30,5 +45,19 @@ strictifyExpr e@(App e1 e2)
             b <- mkSysLocalM (fsLit "strict") (exprType e2)
             return $ Case e2 b (exprType e) [(DEFAULT, [], App e1 (Var b))]
 strictifyExpr e = return e
+
+\end{code}
+Utilities and other miscellanious stuff
+\begin{code}
+
+shouldStrictify :: ModGuts -> CoreBndr -> CoreM Bool
+shouldStrictify guts bndr = do
+  l <- annotationsOn guts bndr :: CoreM [Strictify]
+  return $ not $ null l
+
+annotationsOn :: Data a => ModGuts -> CoreBndr -> CoreM [a]
+annotationsOn guts bndr = do
+  anns <- getAnnotations deserializeWithData guts
+  return $ lookupWithDefaultUFM anns [] (varUnique bndr)
 
 \end{code}

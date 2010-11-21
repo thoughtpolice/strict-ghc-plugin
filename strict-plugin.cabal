@@ -10,6 +10,7 @@ Homepage:       http://www.omega-prime.co.uk
 Library
     Exposed-Modules:
         Strict.Plugin
+        Strict.Annotation
     Other-Modules:
         Strict.Pass
     Build-Depends:

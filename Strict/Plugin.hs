@@ -1,4 +1,4 @@
-module Strict.Plugin where
+module Strict.Plugin (plugin) where
 
 import Strict.Pass
 
@@ -11,4 +11,4 @@ plugin = defaultPlugin {
 
 install :: [CommandLineOption] -> [CoreToDo] -> CoreM [CoreToDo]
 install _option todos = do
-    return $ CoreDoPluginPass "Strictify" (BindsToBindsPluginPass strictifyProgram) : todos
+    return $ CoreDoPluginPass "Strictify" (ModGutsToBindsPluginPass strictifyProgram) : todos
