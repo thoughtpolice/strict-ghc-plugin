@@ -1,7 +1,5 @@
 module Strict.Plugin (plugin) where
-
 import Strict.Pass
-
 import GhcPlugins
 
 plugin :: Plugin
