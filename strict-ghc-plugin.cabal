@@ -1,0 +1,28 @@
+Name:           strict-ghc-plugin
+Version:        0.1
+License:        BSD3
+License-File:   LICENSE
+Synopsis:       Turn Haskell into a strict language with a compiler plugin
+Description:    This library allows you to annotate top-level function definitions, and the compiler will make them strict functions as opposed to lazy - you can turn Haskell into a strict language!
+Cabal-Version:  >= 1.10
+Build-Type:     Simple
+Author:         Max Bolingbroke <batterseapower@hotmail.com>
+Maintainer:     Austin Seipp <as@hacks.yi.org>
+Homepage:       http://github.com/thoughtpolice/strict-ghc-plugin
+Bug-reports:    https://github.com/thoughtpolice/strict-ghc-plugin/issues
+
+source-repository head
+  type: git
+  location: https://github.com/thoughtpolice/strict-ghc-plugin.git
+
+Library
+    Exposed-Modules:
+        Strict.Plugin
+        Strict.Annotation
+    Other-Modules:
+        Strict.Pass
+    Build-Depends:
+        base,
+        syb,
+        ghc >= 7.2
+    default-language: Haskell98

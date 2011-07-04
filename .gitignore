@@ -2,3 +2,5 @@ _darcs
 *.o
 *.hi
 *~
+tests/NonTerminating
+dist

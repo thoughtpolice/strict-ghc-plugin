@@ -2,7 +2,7 @@ module Strict.Plugin (plugin) where
 
 import Strict.Pass
 
-import GHCPlugins
+import GhcPlugins
 
 plugin :: Plugin
 plugin = defaultPlugin {
@@ -11,4 +11,4 @@ plugin = defaultPlugin {
 
 install :: [CommandLineOption] -> [CoreToDo] -> CoreM [CoreToDo]
 install _option todos = do
-    return $ CoreDoPluginPass "Strictify" (ModGutsToBindsPluginPass strictifyProgram) : todos
+    return $ CoreDoPluginPass "Strictify" strictifyProgram : todos

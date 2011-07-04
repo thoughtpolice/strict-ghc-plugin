@@ -3,7 +3,7 @@
 
 module Strict.Pass (strictifyProgram) where
 
-import GHCPlugins
+import GhcPlugins
 
 import Control.Monad
 import Data.Generics
@@ -15,8 +15,10 @@ import Strict.Annotation
 Strictification of a program based on annotations.
 \begin{code}
 
-strictifyProgram :: ModGuts -> CoreM [CoreBind]
-strictifyProgram guts = mapM (strictifyFunc guts) (mg_binds guts)
+strictifyProgram :: ModGuts -> CoreM ModGuts
+strictifyProgram guts = do
+  newBinds <- mapM (strictifyFunc guts) (mg_binds guts)
+  return $ guts { mg_binds = newBinds }
 
 strictifyFunc :: ModGuts -> CoreBind -> CoreM CoreBind
 strictifyFunc guts x@(NonRec b e) = do 
