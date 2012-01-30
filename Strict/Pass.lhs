@@ -40,7 +40,7 @@ strictifyExpr e@(App e1 e2)
           App _ _ -> translate
           Case _ _ _ _ -> translate
           Cast _ _ -> translate -- May as well, these two don't
-          Note _ _ -> translate -- appear on types anyway
+          Tick _ _ -> translate -- appear on types anyway
           _ -> return e -- N.b. don't need to consider lets since they will have been eliminated already
   where
     translate = do
