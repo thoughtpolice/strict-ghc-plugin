@@ -2,5 +2,7 @@ _darcs
 *.o
 *.hi
 *~
-tests/NonTerminating
-dist
+dist*
+tests/*.o
+tests/*.hi
+tests/Traced

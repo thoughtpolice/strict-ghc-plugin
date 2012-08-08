@@ -7,7 +7,6 @@ import GhcPlugins
 
 import Control.Monad
 import Data.Generics
-import Data.Maybe
 
 import Strict.Annotation
 
@@ -21,9 +20,9 @@ strictifyProgram guts = do
   return $ guts { mg_binds = newBinds }
 
 strictifyFunc :: ModGuts -> CoreBind -> CoreM CoreBind
-strictifyFunc guts x@(NonRec b e) = do 
-  b <- shouldStrictify guts b
-  case b of
+strictifyFunc guts x@(NonRec b _) = do 
+  b' <- shouldStrictify guts b
+  case b' of
     True -> everywhereM (mkM strictifyExpr) x
     False -> return x
 strictifyFunc guts x@(Rec bes) = do

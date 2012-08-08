@@ -1,0 +1,2 @@
+Original author: Max Bolingbroke
+Maintainer: Austin Seipp <mad.one@gmail.com>
