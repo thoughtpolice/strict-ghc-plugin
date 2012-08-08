@@ -1,5 +1,5 @@
 name:                strict-ghc-plugin
-version:             0.1
+version:             0.1.1
 synopsis:            Compiler plugin for making Haskell strict
 description:
   This plugin gives an example of defining a compiler plugin for
@@ -33,7 +33,7 @@ library
   other-modules:
     Strict.Pass
   build-depends:
-    base,
+    base < 5,
     ghc >= 7.4,
     syb
 
