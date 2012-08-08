@@ -1,5 +1,8 @@
-module Strict.Plugin (plugin) where
-import Strict.Pass
+module Strict.Plugin
+       ( plugin -- :: Plugin
+       ) where
+
+import Strict.Pass (strictifyProgram)
 import GhcPlugins
 
 plugin :: Plugin
@@ -8,5 +11,6 @@ plugin = defaultPlugin {
   }
 
 install :: [CommandLineOption] -> [CoreToDo] -> CoreM [CoreToDo]
-install _option todos = do
+install _ todos = do
+    reinitializeGlobals
     return $ CoreDoPluginPass "Strictify" strictifyProgram : todos
